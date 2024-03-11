@@ -1,0 +1,24 @@
+$primary-color: #c3e0fb;
+$neutral-color: #ffffff;
+$divider-color: #e5e5e5;
+$skeleton-color: #f0f0f0;
+
+$text-primary-color: #001133;
+$text-secondary-color: #989eaa;
+
+$weather-cold: #e4f0fe;
+$weather-chilly: #cdf0eb;
+$weather-warm: #fff4da;
+$weather-hot: #fdd4d7;
+
+$font-family: 'Inter', sans-serif;
+
+// limit desktop width for laptop and large displays
+$screen-max-width: 1100px;
+
+// gap (space between objects, used to give margin to left/right and separete objects)
+$v-margin-desktop: 56px;
+$h-margin-desktop: 0;
+
+$v-margin-mobile: 24px;
+$h-margin-mobile: 16px;

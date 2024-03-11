@@ -1,0 +1,25 @@
+import { Meta, Controls, Canvas, Story } from '@storybook/blocks'
+
+import * as CardCurrentStories from './../components/cards/card-current/CardCurrent.stories'
+import * as CardDayStories from './../components/cards/card-day/CardDay.stories'
+import * as CardHourStories from './../components/cards/card-hour/CardHour.stories'
+
+<Meta title="Welcome" />
+
+# Welcome to Weather Application documentation!
+
+Here, you'll find a comprehensive overview of our application's design system, including colors, typography, and component library. Use this guide to ensure consistency and coherence across your development work.
+
+Explore individual components to see how they behave with different properties and configurations. Experiment with variations to understand their flexibility and adaptability to various use cases.
+
+<Canvas>
+  <Story of={CardCurrentStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={CardDayStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={CardHourStories.Default} />
+</Canvas>

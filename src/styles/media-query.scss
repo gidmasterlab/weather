@@ -1,0 +1,18 @@
+$breakpoint-mobile: 0;
+$breakpoint-desktop: 1;
+
+@mixin mediaQuery($breakpoint) {
+  // mobile
+  @if $breakpoint == $breakpoint-mobile {
+    @media (min-width: 0) and (max-width: 999px) {
+      @content;
+    }
+  }
+
+  // desktop
+  @if $breakpoint == $breakpoint-desktop {
+    @media (min-width: 1000px) {
+      @content;
+    }
+  }
+}
