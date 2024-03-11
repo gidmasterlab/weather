@@ -15,7 +15,7 @@ export const currentWeatherParser = (currentWeather: any): WeatherType => {
     id: currentWeather.last_updated,
     code: currentWeather.condition.code,
     icon: currentWeather.condition.icon,
-    date: new Date(dateWithTimeZone(currentWeather.last_updated)),
+    date: convertToDateWithTimeZone(currentWeather.last_updated),
     condition: currentWeather.condition.text,
     temperature: currentWeather.temp_c
   }
@@ -28,7 +28,7 @@ export const dailyWeatherForecastParser = (dailyWeatherForecast: any[]): Weather
       id: item.date,
       code: item.day.condition.code,
       icon: item.day.condition.icon,
-      date: new Date(dateWithTimeZone(item.date)),
+      date: convertToDateWithTimeZone(item.date),
       condition: item.day.condition.text,
       temperature: item.day.avgtemp_c
     }
@@ -44,7 +44,7 @@ export const hourlyWeatherForecastParser = (dailyWeatherForecast: any[], weather
 
   // get the current hour based on the location timeZone
   // populate the object only with data that will be used in the application
-  const localtime = new Date(dateAndTimeWithTimeZone(weatherLocation.localtime))
+  const localtime = convertToDateWithTimeZone(weatherLocation.localtime)
   const hourFrom = localtime.getHours()
   const hourTo = hourFrom + LIMIT_WEATHER_HOURS
   const hours = twoDaysHours.slice(hourFrom, hourTo)
@@ -54,7 +54,7 @@ export const hourlyWeatherForecastParser = (dailyWeatherForecast: any[], weather
       id: item.time,
       code: item.condition.code,
       icon: item.condition.icon,
-      date: new Date(dateAndTimeWithTimeZone(item.time)),
+      date: convertToDateWithTimeZone(item.time),
       condition: item.condition.text,
       temperature: item.temp_c
     }
@@ -68,7 +68,7 @@ export const weatherLocationParser = (weatherLocation: any): LocationType => {
     country: weatherLocation.country,
     city: weatherLocation.name,
     region: weatherLocation.region,
-    localTime: new Date(dateAndTimeWithTimeZone(weatherLocation.localtime))
+    localTime: convertToDateWithTimeZone(weatherLocation.localtime)
   }
 }
 
@@ -83,16 +83,17 @@ export const locationsParser = (locations: any[]): LocationType[] => {
   }))
 }
 
-// It fixes issues with IOS to be able to convert date properly and use getHours
-const dateAndTimeWithTimeZone = (date: string): string => {
+// Convert string data to a Date object while ensuring proper handling of time zones to mitigate issues.
+// Adding a specified time zone can help ensure accurate conversion and alleviate potential discrepancies in date representation.
+const convertToDateWithTimeZone = (date: string): Date => {
   const [datePart, timePart] = date.split(' ')
+
+  if (!timePart) {
+    return new Date(`${datePart}T00:00:00`)
+  }
+
   const [hour, minute] = timePart.split(':')
   const formattedHour = hour.padStart(2, '0')
 
-  // Combine date and time parts with 'T' separator
-  return `${datePart}T${formattedHour}:${minute}`
-}
-
-const dateWithTimeZone = (date: string): string => {
-  return `${date}T00:00:00`
+  return new Date(`${datePart}T${formattedHour}:${minute}`)
 }
